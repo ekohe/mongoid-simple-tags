@@ -28,7 +28,7 @@ module Mongoid
             self.collection.map_reduce(
               "function() { if(this.tags) this.tags.forEach(function(t){ emit(t, 1); }); }",
               "function(key,values) { var count = 0; values.forEach(function(v){ count += v; }); return count; }",
-              { :out => 'tags' }
+              { :out => {:merge => 'tags'} }
             )
           end
       end
